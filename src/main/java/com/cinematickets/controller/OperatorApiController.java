@@ -8,20 +8,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/operator")
+@RequestMapping("/api/admin/operator")
 public class OperatorApiController {
 
     @Autowired
     private OperatorService operatorService;
 
     @PostMapping()
-    public void save(@ModelAttribute Operator operator) {
-        operatorService.save(operator);
+    public Operator register(@RequestBody Operator operator) {
+        return operatorService.save(operator);
     }
 
     @GetMapping()
     public List<Operator> getAll() {
         return operatorService.getAll();
+    }
+
+    @PostMapping( "/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        operatorService.deleteById(id);
+        return "Operator successful deleted!";
     }
 }
 

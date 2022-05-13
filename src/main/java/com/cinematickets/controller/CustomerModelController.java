@@ -1,7 +1,6 @@
 package com.cinematickets.controller;
 
 import com.cinematickets.entity.Customer;
-import com.cinematickets.entity.Operator;
 import com.cinematickets.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,16 +8,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/admin/customer")
 public class CustomerModelController {
 
     @Autowired
     private CustomerService customerService;
 
     @PostMapping()
-    public String save(Model model, @ModelAttribute Customer customer) {
+    public String register(Model model, @ModelAttribute Customer customer) {
         customerService.save(customer);
-        return "redirect:/customer";
+        return "redirect:/admin/customer";
     }
 
     @GetMapping()
@@ -28,9 +27,9 @@ public class CustomerModelController {
         return "admin-panel-customers";
     }
 
-    @PostMapping( "/delete/{customerId}")
-    public String deleteByEmployeeCode(@PathVariable Long customerId) {
-        customerService.deleteById(customerId);
-        return "redirect:/customer";
+    @PostMapping( "/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        customerService.deleteById(id);
+        return "redirect:/admin/customer";
     }
 }

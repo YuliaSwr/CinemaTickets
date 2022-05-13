@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/admin-panel.css" th:href="@{/admin-panel.css}" >
-    <link rel="stylesheet" href="../static/admin-panel-tickets.css" th:href="@{/admin-panel-tickets.css}">
+    <link rel="stylesheet" href="../static/header.css" th:href="@{/header.css}" >
+    <link rel="stylesheet" href="../static/queue-table.css" th:href="@{/queue-table.css}" >
+    <link rel="stylesheet" href="../static/statistic-block.css" th:href="@{/statistic-block.css}" >
+    <link rel="stylesheet" href="../static/selection-block.css" th:href="@{/selection-block.css}" >
+    <link rel="stylesheet" href="../static/registration-block.css" th:href="@{/registration-block.css}">
 
     <!--FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,21 +18,21 @@
 </head>
 <body>
 
-<!-- HEADER -->
+<!------- HEADER -------->
 <div class="header">
     <div class="header-title">
         <p>Administration Page</p>
     </div>
     <div class="header-menu">
-        <a class="menu-item" th:href="@{/assignment}">assignments</a>
-        <a class="menu-item  current-page" th:href="@{/ticket}">tickets</a>
-        <a class="menu-item" th:href="@{/customer}">customers</a>
-        <a class="menu-item" th:href="@{/operator}">operators</a>
+        <a class="menu-item" th:href="@{/admin/assignment}">assignments</a>
+        <a class="menu-item  current-page" th:href="@{/admin/ticket}">tickets</a>
+        <a class="menu-item" th:href="@{/admin/customer}">customers</a>
+        <a class="menu-item" th:href="@{/admin/operator}">operators</a>
     </div>
 </div>
-<!------------>
+<!----------------------->
 
-<!-- STATISTIC BLOCK -->
+<!--- STATISTIC BLOCK --->
 <div class="statistic">
     <div class="statistic-block b1">
         <div class="statistic-block-digit" th:text="${number_JohnWick}">
@@ -80,8 +83,10 @@
         </div>
     </div>
 </div>
+<!----------------------->
+
 <!-- REGISTRATION FORM -->
-<form class="form-block" method="post" th:action="@{/ticket}" th:object="${ticket}">
+<form class="form-block" method="post" th:action="@{/admin/ticket}" th:object="${ticket}">
     <div class="register">
         <div class="register-title">
             Register new ticket
@@ -101,7 +106,7 @@
                     <option value="Titanic">Titanic</option>
                     <option value="LaLaLand">La La Land</option>
                     <option value="JohnWick">John Wick</option>
-                    <option value="Kill Bill">Kill Bill</option>
+                    <option value="KillBill">Kill Bill</option>
                     <option value="Deadpool">Deadpool</option>
                     <option value="GreenBook">Green Book</option>
                 </select>
@@ -128,7 +133,30 @@
                 </select>
             </div>
             <div class="register-form-item register-submit">
-                <input type="submit" value="submit" id="submit">
+                <input type="submit" value="Submit" id="submit">
+            </div>
+        </div>
+    </div>
+</form>
+<!----------------------->
+
+<!---- SELECTION FORM --->
+<form class="selection-block" method="get" th:action="@{/admin/ticket/search}" th:object="${search}">
+    <div class="selection">
+        <div class="selection-title">
+            SELECT ASSIGNMENTS
+        </div>
+        <div class="selection-form">
+            <div class="selection-form-item">
+                <label for="customer">Customer email:</label>
+                <select id="search-customer" required th:field="*{customerEmail}">
+                    <option value="">Select a customer</option>
+                    <option value="ALL">ALL</option>
+                    <option th:each="customer : ${customers}" th:text="${customer.email}" th:value="${customer.email}"></option>
+                </select>
+            </div>
+            <div class="selection-form-item selction-submit">
+                <input type="submit" value="Submit" id="search-submit" class="button">
             </div>
         </div>
     </div>
@@ -140,28 +168,28 @@
     <table class="assignment-table" cellpadding="0" cellspacing="0">
         <thead>
         <tr id="thead">
-            <th class="info-column">
+            <th class="info-column-t">
                 TICKET_ID
             </th>
-            <th class="info-column">
+            <th class="info-column-t">
                 MOVIE
             </th>
-            <th class="info-column">
+            <th class="info-column-t">
                 SESSION_DATE
             </th>
-            <th class="info-column">
+            <th class="info-column-t">
                 SESSION_TIME
             </th>
-            <th class="info-column">
+            <th class="info-column-t">
                 TYPE
             </th>
-            <th class="info-column">
+            <th class="info-column-t">
                 CUSTOMER
             </th>
-            <th class="button-column">
+            <th class="button-column-t">
                 EDIT
             </th>
-            <th class="button-column">
+            <th class="button-column-t">
                 DELETE
             </th>
         </tr>
@@ -210,7 +238,7 @@
                 </form>
             </td>
             <td>
-                <form th:method="post" th:action="@{/ticket/delete/{ticketId}(ticketId=${ticket.id})}">
+                <form th:method="post" th:action="@{/admin/ticket/delete/{id}(id=${ticket.id})}">
                     <button class="button delete-button" type="submit">DELETE</button>
                 </form>
             </td>
@@ -218,6 +246,6 @@
         </tbody>
     </table>
 </div>
-<!--------------------->
+<!----------------------->
 </body>
 </html>

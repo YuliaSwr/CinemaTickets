@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/admin-panel.css" th:href="@{/admin-panel.css}" >
-    <link rel="stylesheet" href="../static/admin-panel-assignments.css" th:href="@{/admin-panel-assignments.css}">
-    <link rel="stylesheet" href="../static/admin-panel-operators.css" th:href="@{/admin-panel-operators.css}">
+    <link rel="stylesheet" href="../static/header.css" th:href="@{/header.css}" >
+    <link rel="stylesheet" href="../static/queue-table.css" th:href="@{/queue-table.css}" >
+    <link rel="stylesheet" href="../static/statistic-block.css" th:href="@{/statistic-block.css}" >
+    <link rel="stylesheet" href="../static/registration-block.css" th:href="@{/registration-block.css}">
 
     <!--FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,21 +16,21 @@
           rel="stylesheet">
 </head>
 <body>
-<!-- HEADER -->
+<!------- HEADER -------->
 <div class="header">
     <div class="header-title">
         <p>Administration Page</p>
     </div>
     <div class="header-menu">
-        <a class="menu-item current-page" th:href="@{/assignment}">assignments</a>
-        <a class="menu-item" th:href="@{/ticket}">tickets</a>
-        <a class="menu-item" th:href="@{/customer}">customers</a>
-        <a class="menu-item" th:href="@{/operator}">operators</a>
+        <a class="menu-item current-page" th:href="@{/admin/assignment}">assignments</a>
+        <a class="menu-item" th:href="@{/admin/ticket}">tickets</a>
+        <a class="menu-item" th:href="@{/admin/customer}">customers</a>
+        <a class="menu-item" th:href="@{/admin/operator}">operators</a>
     </div>
 </div>
-<!------------>
+<!----------------------->
 
-<!----- STATISTIC BLOCK ------>
+<!--- STATISTIC BLOCK --->
 <div class="statistic">
     <div class="statistic-block b1">
         <div class="statistic-block-digit" th:text="${amount_waiting}">
@@ -59,7 +60,7 @@
 <!----------------------->
 
 <!-- REGISTRATION FORM -->
-<form class="form-block" method="post" th:action="@{/assignment}" th:object="${edit_assignment}">
+<form class="form-block" method="post" th:action="@{/admin/assignment}" th:object="${edit_assignment}">
     <div class="register">
         <div class="register-title">
             Set an operator to assignment
@@ -80,37 +81,36 @@
                 </select>
             </div>
             <div class="register-form-item register-submit">
-                <input type="submit" name="submit" value="add" id="submit">
+                <input type="submit" name="submit" value="Submit" id="submit">
             </div>
         </div>
     </div>
 </form>
-
 
 <!----- QUEUE TABLE ----->
 <div class="queue">
     <table class="assignment-table" cellpadding="0" cellspacing="0">
         <thead>
         <tr id="thead">
-            <th id="first-column">
+            <th class="info-column-a">
                 ASSIGMENT_ID
             </th>
-            <th>
+            <th class="info-column-a">
                 BOOKING_DATA_TIME
             </th>
-            <th>
+            <th class="info-column-a">
                 TICKET_ID
             </th>
-            <th>
+            <th class="info-column-a">
                 OPERATOR_ID
             </th>
-            <th>
+            <th class="info-column-a">
                 STATUS
             </th>
-            <th class="button-column">
+            <th class="button-column-a">
                 EDIT
             </th>
-            <th class="button-column">
+            <th class="button-column-a">
                 DELETE
             </th>
         </tr>
@@ -150,12 +150,12 @@
             <td th:text="${assignment.operatorId} ?: 'none'"></td>
             <td th:text="${assignment.status}"></td>
             <td>
-                <form th:method="post" th:action="@{/assignment/done}">
-                    <button class="button set-button" type="submit" name="submit">SET AS DONE</button>
+                <form th:if="${assignment.isInProcess()}" th:method="post" th:action="@{/admin/assignment/done/{id}(id=${assignment.id})}">
+                    <button class="button set-button" type="submit">SET AS DONE</button>
                 </form>
             </td>
             <td>
-                <form th:method="post" th:action="@{/assignment/delete/{assignmentId}(assignmentId=${assignment.id})}">
+                <form th:method="post" th:action="@{/admin/assignment/delete/{id}(id=${assignment.id})}">
                     <button class="button delete-button" type="submit" name="submit">DELETE</button>
                 </form>
             </td>
@@ -163,6 +163,6 @@
         </tbody>
     </table>
 </div>
-<!--------------------->
+<!----------------------->
 </body>
 </html>

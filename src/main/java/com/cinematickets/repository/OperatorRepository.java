@@ -15,6 +15,4 @@ public interface OperatorRepository extends CrudRepository<Operator, Long> {
     Optional<Operator> findByEmployeeCode(String employeeCode);
 
     List<Operator> findAllByIsAvailable(boolean isAvailbale);
-
-    void deleteByEmployeeCode(String employeeCode);
 }

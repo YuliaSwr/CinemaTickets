@@ -20,10 +20,14 @@ public class AssignmentService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
+    @Autowired
+    private OperatorService operatorService;
+
     public Assignment save(Ticket ticket) {
-        if (assignmentRepository.findByTicketId(ticket.getId()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assigment for this ticket is already in system");
-        }
+        assignmentRepository.findByTicketId(ticket.getId())
+                .ifPresent((s) -> {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assignment for this ticket is already in system");
+                });
 
         Assignment assignment = Assignment.builder()
                 .ticketId(ticket.getId())
@@ -34,30 +38,51 @@ public class AssignmentService {
         return assignmentRepository.save(assignment);
     }
 
-    public Assignment getByTicketId(Long ticketId) {
-         assignmentRepository.findByTicketId(ticketId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assigment for this ticket is NOT in system"));
-        return assignmentRepository.findByTicketId(ticketId).get();
-    }
-
     public List<Assignment> getAll() {
         return assignmentRepository.findAll();
+    }
+
+    public Assignment getByTicketId(Long ticketId) {
+        return assignmentRepository.findByTicketId(ticketId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assignment for this ticket is NOT in system"));
     }
 
     public List<Assignment> getByStatus(AssignmentStatus status) {
         return assignmentRepository.findAllByStatus(status);
     }
 
-    public void deleteById(Long ticketId) {
-        assignmentRepository.deleteByTicketId(ticketId);
-    }
-
     public void edit(EditAssignment request) {
-        Assignment assignment = assignmentRepository.findById(request.getAssignmentId()).get();
+        Assignment assignment = assignmentRepository.findById(request.getAssignmentId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assignment is NOT in system"));
 
         assignment.setOperatorId(request.getOperatorId());
         assignment.setStatus(AssignmentStatus.IN_PROCESS);
 
+        assignmentRepository.save(assignment);
+    }
+
+    public void deleteById(Long id) {
+        Assignment assignment = assignmentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assignment is NOT in system"));
+
+        if (assignment.getOperatorId() != null) {
+            operatorService.getById(assignment.getOperatorId()).setIsAvailable(true);
+        }
+
+        assignmentRepository.deleteById(id);
+    }
+
+    public void setAsDone(Long id) {
+        Assignment assignment = assignmentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The assignment is NOT in system"));
+
+        if (!assignment.getStatus().equals(AssignmentStatus.IN_PROCESS)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This assignment is NOT in process");
+        }
+
+        operatorService.getById(assignment.getOperatorId()).setIsAvailable(true);
+
+        assignment.setStatus(AssignmentStatus.DONE);
         assignmentRepository.save(assignment);
     }
 }

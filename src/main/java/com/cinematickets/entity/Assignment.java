@@ -1,18 +1,16 @@
 package com.cinematickets.entity;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
+@Builder
 @Entity
 public class Assignment {
 
@@ -39,10 +37,7 @@ public class Assignment {
     @Enumerated(value = EnumType.STRING)
     private AssignmentStatus status;
 
-//    @OneToOne()
-//    private Ticket ticket;
-//
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "operator_id", referencedColumnName = "id")
-//    private Operator operator;
+    public boolean isInProcess() {
+        return status.equals(AssignmentStatus.IN_PROCESS);
+    }
 }

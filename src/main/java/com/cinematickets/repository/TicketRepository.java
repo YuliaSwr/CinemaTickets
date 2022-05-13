@@ -15,4 +15,6 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
     List<Ticket> findAll();
 
     List<Ticket> findAllByMovieIgnoreCase(String movie);
+
+    List<Ticket> findAllByCustomerEmail(String email);
 }

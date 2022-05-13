@@ -111,14 +111,18 @@
 
 /* ------ REGISTRATION BLOCK ------ */
 
-.form-block {
+/* -------------------------------- */
+
+/* --------- SELECTION BLOCK --------- */
+
+.selection-block {
     width: 100%;
 
     display: flex;
     justify-content: center;
 }
 
-.register {
+.selection {
     background-color: #fff;
 
     width: 85%;
@@ -135,13 +139,14 @@
 
 }
 
-.register-title {
+
+.selection-title {
     font-size: 18px;
     width: 100%;
     margin: 20px;
 }
 
-.register-form {
+.selection-form {
     width: 95%;
 
     display: flex;
@@ -149,25 +154,12 @@
     flex-wrap: wrap;
 }
 
-.register-form select {
-    width: 180px;
-    height: 25px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.register-form option {
-    width: 180px;
-    height: 25px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.register-form-item {
+.selection-form-item {
     margin: 20px;
-    display: flex;
-    flex-direction: column;
 }
 
-.register-form input {
+
+.selection-form input {
     background-color: #F2F2F4;
 
     font-family: 'Montserrat', sans-serif;
@@ -179,12 +171,12 @@
     border: 0;
 }
 
-.register-form input:focus {
+.selection-form input:focus {
     outline: none;
     box-shadow: 1px 1px 1px #bad9bf;
 }
 
-#submit {
+#selection-submit {
     background-color: #bad9bf;
     color: #fff;
 
@@ -199,20 +191,16 @@
     font-size: 18px;
 }
 
-#submit:hover {
+#selection:hover {
     color: #000;
 }
 
-/* -------------------------------- */
-
-/* ---------  QUEUE TABLE --------- */
-
-.info-column {
-    width: 13%;
+.button {
+    border: 0;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 12px;
+    cursor: pointer;
 }
 
-.button-column {
-    width: 11%;
-}
-
-/* -------------------------------- */
+/* ----------------------------------- */

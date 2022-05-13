@@ -5,8 +5,9 @@
     <title>Admin Panel</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/admin-panel.css" th:href="@{/admin-panel.css}" >
-    <link rel="stylesheet" href="../static/admin-panel-operators.css" th:href="@{/admin-panel-operators.css}">
+    <link rel="stylesheet" href="../static/header.css" th:href="@{/header.css}" >
+    <link rel="stylesheet" href="../static/queue-table.css" th:href="@{/queue-table.css}" >
+    <link rel="stylesheet" href="../static/registration-block.css" th:href="@{/registration-block.css}">
 
     <!--FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,22 +16,22 @@
           rel="stylesheet">
 </head>
 <body>
-<!-- HEADER -->
+<!------- HEADER -------->
 <div class="header">
     <div class="header-title">
         <p>Administration Page</p>
     </div>
     <div class="header-menu">
-        <a class="menu-item" th:href="@{/assignment}">assignments</a>
-        <a class="menu-item" th:href="@{/ticket}">tickets</a>
-        <a class="menu-item" th:href="@{/customer}">customers</a>
-        <a class="menu-item current-page" th:href="@{/operator}">operators</a>
+        <a class="menu-item" th:href="@{/admin/assignment}">assignments</a>
+        <a class="menu-item" th:href="@{/admin/ticket}">tickets</a>
+        <a class="menu-item" th:href="@{/admin/customer}">customers</a>
+        <a class="menu-item current-page" th:href="@{/admin/operator}">operators</a>
     </div>
 </div>
-<!------------>
+<!----------------------->
 
 <!-- REGISTRATION FORM -->
-<form class="form-block" method="post" th:action="@{/operator}" th:object="${operator}">
+<form class="form-block" method="post" th:action="@{/admin/operator}" th:object="${operator}">
 <div class="register">
     <div class="register-title">
         Register new operator
@@ -49,7 +50,7 @@
             <input type="text" name="first-name" id="first-name" th:field="*{firstName}">
         </div>
         <div class="register-form-item register-submit">
-            <input type="submit" name="submit" value="add" id="submit">
+            <input type="submit" name="submit" value="Submit" id="submit">
         </div>
     </div>
 </div>
@@ -121,12 +122,12 @@
             <td th:text="${operator.lastName}"></td>
             <td th:text="${operator.isAvailable}"></td>
             <td>
-                <form method="post" th:method="post" th:action="@{/operator/edit/{employeeCode}(employeeCode=${operator.employeeCode})}">
+                <form th:method="post">
                     <button class="button edit-button" type="submit" name="submit">EDIT</button>
                 </form>
             </td>
             <td>
-            <form th:method="post" th:action="@{/operator/delete/{employeeCode}(employeeCode=${operator.employeeCode})}">
+            <form th:method="post" th:action="@{/admin/operator/delete/{id}(id=${operator.id})}">
                 <button class="button delete-button" type="submit" name="submit">DELETE</button>
             </form>
             </td>

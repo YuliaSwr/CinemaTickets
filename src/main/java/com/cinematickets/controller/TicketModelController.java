@@ -1,8 +1,8 @@
 package com.cinematickets.controller;
 
+import com.cinematickets.entity.SearchRequest;
 import com.cinematickets.entity.Ticket;
 import com.cinematickets.service.CustomerService;
-import com.cinematickets.service.OperatorService;
 import com.cinematickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/ticket")
+@RequestMapping("/admin/ticket")
 public class TicketModelController {
 
     @Autowired
@@ -27,23 +27,49 @@ public class TicketModelController {
     @PostMapping()
     public String save(Model model, @ModelAttribute Ticket ticket) {
         ticketService.save(ticket);
-        return "redirect:/ticket";
+        return "redirect:/admin/ticket";
     }
 
     @GetMapping()
     public String getAll(Model model) {
-        for (String movie : MOVIES) {
-            model.addAttribute("number_" + movie, ticketService.getNumberForOneMovie(movie));
-        }
-        model.addAttribute("customers", customerService.getAll());
-        model.addAttribute("ticket", new Ticket());
-        model.addAttribute("tickets",ticketService.getAll());
+
+        setAttributesForPage(model);
+
         return "admin-panel-tickets";
     }
 
-    @PostMapping( "/delete/{ticketId}")
-    public String deleteById(@PathVariable Long ticketId) {
-        ticketService.deleteById(ticketId);
-        return "redirect:/ticket";
+    private void setAttributesForPage(Model model) {
+        // for statistic block
+        for (String movie : MOVIES) {
+            model.addAttribute("number_" + movie, ticketService.getAmountOfMovie(movie));
+        }
+
+        // for registration form
+        model.addAttribute("customers", customerService.getAll());
+
+        // for selection block
+        model.addAttribute("search", new SearchRequest());
+
+        // for queue table
+        model.addAttribute("ticket", new Ticket());
+        model.addAttribute("tickets", ticketService.getAll());
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        ticketService.deleteById(id);
+        return "redirect:/admin/ticket";
+    }
+
+    @GetMapping("/search")
+    public String getAllByCustomerEmail(Model model, @ModelAttribute SearchRequest searchRequest) {
+
+        if (searchRequest.getCustomerEmail().equals("ALL")) {
+            return "redirect:/admin/ticket";
+        }
+
+        setAttributesForPage(model);
+        model.addAttribute("tickets", ticketService.getAllByCustomer(searchRequest.getCustomerEmail()));
+        return "admin-panel-tickets";
     }
 }
