@@ -28,8 +28,11 @@ public class Operator {
     private String employeeCode;
 
     @NotNull
-    private String name;
+    private String lastName;
 
     @NotNull
-    private Boolean isAvailable;
+    private String firstName;
+
+    @NotNull
+    private Boolean isAvailable = true;
 }

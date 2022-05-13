@@ -1,7 +1,7 @@
 package com.cinematickets.entity;
 
-public enum TicketStatus {
+public enum AssignmentStatus {
     WAITING,
-    IN_PROCCESS,
+    IN_PROCESS,
     DONE
 }

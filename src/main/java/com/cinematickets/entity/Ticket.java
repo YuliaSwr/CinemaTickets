@@ -1,13 +1,18 @@
 package com.cinematickets.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
-public class Ticket {
+public class Ticket implements Serializable {
 
     @SequenceGenerator(
             name = "ticket_sequence",
@@ -28,8 +33,10 @@ public class Ticket {
     @Enumerated(value = EnumType.STRING)
     private TicketType type;
 
+    private String date;
+
+    private String time;
+
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private String customerEmail;
 }

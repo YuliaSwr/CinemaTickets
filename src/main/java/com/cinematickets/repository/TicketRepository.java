@@ -13,4 +13,6 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
     Optional<Ticket> findById(Long id);
 
     List<Ticket> findAll();
+
+    List<Ticket> findAllByMovieIgnoreCase(String movie);
 }

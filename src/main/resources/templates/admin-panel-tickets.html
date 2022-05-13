@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/admin-panel.css" th:href="@{/admin-panel.css}" >
+    <link rel="stylesheet" href="../static/admin-panel-tickets.css" th:href="@{/admin-panel-tickets.css}">
+
+    <!--FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;1,300;1,500&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-title">
+        <p>Administration Page</p>
+    </div>
+    <div class="header-menu">
+        <a class="menu-item" th:href="@{/assignment}">assignments</a>
+        <a class="menu-item  current-page" th:href="@{/ticket}">tickets</a>
+        <a class="menu-item" th:href="@{/customer}">customers</a>
+        <a class="menu-item" th:href="@{/operator}">operators</a>
+    </div>
+</div>
+<!------------>
+
+<!-- STATISTIC BLOCK -->
+<div class="statistic">
+    <div class="statistic-block b1">
+        <div class="statistic-block-digit" th:text="${number_JohnWick}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            John Wick
+        </div>
+    </div>
+    <div class="statistic-block b2">
+        <div class="statistic-block-digit" th:text="${number_GreenBook}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            Green Book
+        </div>
+    </div>
+    <div class="statistic-block b3">
+        <div class="statistic-block-digit" th:text="${number_Deadpool}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            Deadpool
+        </div>
+    </div>
+    <div class="statistic-block b4">
+        <div class="statistic-block-digit" th:text="${number_LaLaLand}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            La La Land
+        </div>
+    </div>
+    <div class="statistic-block b5">
+        <div class="statistic-block-digit" th:text="${number_KillBill}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            Kill Bill
+        </div>
+    </div>
+    <div class="statistic-block b6">
+        <div class="statistic-block-digit" th:text="${number_Titanic}">
+            0
+        </div>
+        <div class="statistic-block-movie">
+            Titanic
+        </div>
+    </div>
+</div>
+<!-- REGISTRATION FORM -->
+<form class="form-block" method="post" th:action="@{/ticket}" th:object="${ticket}">
+    <div class="register">
+        <div class="register-title">
+            Register new ticket
+        </div>
+        <div class="register-form">
+            <div class="register-form-item">
+                <label for="customer">Customer email:</label>
+                <select id="customer" required th:field="*{customerEmail}">
+                    <option value="">Select a customer</option>
+                    <option th:each="customer : ${customers}" th:text="${customer.email}" th:value="${customer.email}">hh</option>
+                </select>
+            </div>
+            <div class="register-form-item">
+                <label for="movie">Movie:</label>
+                <select id="movie" required th:field="*{movie}">
+                    <option value="" hidden>Select a movie</option>
+                    <option value="Titanic">Titanic</option>
+                    <option value="LaLaLand">La La Land</option>
+                    <option value="JohnWick">John Wick</option>
+                    <option value="Kill Bill">Kill Bill</option>
+                    <option value="Deadpool">Deadpool</option>
+                    <option value="GreenBook">Green Book</option>
+                </select>
+            </div>
+            <div class="register-form-item">
+                <label for="date">Session date:</label>
+                <input type="date" id="date" th:field="*{date}">
+            </div>
+            <div class="register-form-item">
+                <label for="time">Session time:</label>
+                <select id="time" required th:field="*{time}">
+                    <option value="" hidden>Select session time</option>
+                    <option value="18:00">18:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="22:00">22:00</option>
+                </select>
+            </div>
+            <div class="register-form-item">
+                <label for="type">Type:</label>
+                <select id="type" required th:field="*{type}">
+                    <option value="" hidden>Select a type</option>
+                    <option value="COMFORT">COMFORT</option>
+                    <option value="LUXE">LUXE</option>
+                </select>
+            </div>
+            <div class="register-form-item register-submit">
+                <input type="submit" value="submit" id="submit">
+            </div>
+        </div>
+    </div>
+</form>
+<!----------------------->
+
+<!----- QUEUE TABLE ----->
+<div class="queue">
+    <table class="assignment-table" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr id="thead">
+            <th class="info-column">
+                TICKET_ID
+            </th>
+            <th class="info-column">
+                MOVIE
+            </th>
+            <th class="info-column">
+                SESSION_DATE
+            </th>
+            <th class="info-column">
+                SESSION_TIME
+            </th>
+            <th class="info-column">
+                TYPE
+            </th>
+            <th class="info-column">
+                CUSTOMER
+            </th>
+            <th class="button-column">
+                EDIT
+            </th>
+            <th class="button-column">
+                DELETE
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                0
+            </td>
+            <td>
+                Green Book
+            </td>
+            <td>
+                20.05.22
+            </td>
+            <td>
+                20.00
+            </td>
+            <td>
+                COMFORT
+            </td>
+            <td>
+                yulia@gmail.com
+            </td>
+            <td>
+                <form>
+                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button class="button delete-button" type="submit" name="submit">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.movie}"></td>
+            <td th:text="${ticket.date}"></td>
+            <td th:text="${ticket.time}"></td>
+            <td th:text="${ticket.type}"></td>
+            <td th:text="${ticket.customerEmail}"></td>
+            <td>
+                <form method="post" th:method="post">
+                    <button class="button edit-button" type="submit">EDIT</button>
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/ticket/delete/{ticketId}(ticketId=${ticket.id})}">
+                    <button class="button delete-button" type="submit">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--------------------->
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/admin-panel.css" th:href="@{/admin-panel.css}" >
+    <link rel="stylesheet" href="../static/admin-panel-operators.css" th:href="@{/admin-panel-operators.css}">
+
+    <!--FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;1,300;1,500&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<!-- HEADER -->
+<div class="header">
+    <div class="header-title">
+        <p>Administration Page</p>
+    </div>
+    <div class="header-menu">
+        <a class="menu-item" th:href="@{/assignment}">assignments</a>
+        <a class="menu-item" th:href="@{/ticket}">tickets</a>
+        <a class="menu-item current-page" th:href="@{/customer}">customers</a>
+        <a class="menu-item" th:href="@{/operator}">operators</a>
+    </div>
+</div>
+<!------------>
+
+<!-- REGISTRATION FORM -->
+<form class="form-block" method="post" th:action="@{/customer}" th:object="${customer}">
+    <div class="register">
+        <div class="register-title">
+            Register new customer
+        </div>
+        <div class="register-form">
+            <div class="register-form-item">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}">
+            </div>
+            <div class="register-form-item">
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}">
+            </div>
+            <div class="register-form-item">
+                <label for="password">Password:</label>
+                <input type="password" id="password" th:field="*{password}">
+            </div>
+            <div class="register-form-item register-submit">
+                <input type="submit" name="submit" value="add" id="submit">
+            </div>
+        </div>
+    </div>
+</form>
+<!----------------------->
+
+<!----- QUEUE TABLE ----->
+<div class="queue">
+    <table cellpadding="0" cellspacing="0">
+        <!-- header of table -->
+        <thead>
+        <tr id="thead">
+            <th class="info-column">
+                ID
+            </th>
+            <th class="info-column">
+                EMAIL
+            </th>
+            <th class="info-column">
+                NAME
+            </th>
+            <th class="info-column">
+                TICKETS ID
+            </th>
+            <th class="button-column">
+                EDIT
+            </th>
+            <th class="button-column">
+                DELETE
+            </th>
+        </tr>
+        </thead>
+        <!--------------------->
+        <tbody>
+        <tr>
+            <td>
+                0
+            </td>
+            <td>
+                yulia@gmail.com
+            </td>
+            <td>
+                YULIA
+            </td>
+            <td>
+                34562
+            </td>
+            <td>
+                <form>
+                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button class="button delete-button" type="submit" name="submit">DELETE</button>
+                </form>
+            </td>
+
+        </tr>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.getTicketsString()}"></td>
+            <td>
+                <form method="post" th:method="post">
+                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/customer/delete/{id}(id=${customer.id})}">
+                    <button class="button delete-button" type="submit" name="submit">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!----------------------->
+</body>
+</html>

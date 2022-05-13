@@ -1,11 +1,10 @@
 package com.cinematickets.entity;
 
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Data
@@ -25,13 +24,28 @@ public class Customer {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$")
     private String email;
 
     @NotNull
-    @Min(value = 8)
+    private String name;
+
+    @NotNull
     private String password;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+//    @Nullable
+//    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+//    private List<Ticket> tickets;
+
+    @Nullable
+    @ElementCollection
+    private List<Long> tickets;
+
+    @Nullable
+    public String getTicketsString() {
+        String result = "";
+        for (Long id: tickets) {
+            result = result + id + "\n";
+        }
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +29,10 @@ public class OperatorService {
         return operatorRepository.findByEmployeeCode(employeeCode).get();
     }
 
+    public List<Operator> getAllAvailable() {
+        return operatorRepository.findAllByIsAvailable(true);
+    }
+
     public List<Operator> getAll() {
         return operatorRepository.findAll();
     }
@@ -36,11 +41,18 @@ public class OperatorService {
         Operator operator = operatorRepository.findByEmployeeCode(newOperator.getEmployeeCode())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email is NOT in system"));
         operator.setIsAvailable(newOperator.getIsAvailable());
-        operator.setName(newOperator.getName());
+        operator.setFirstName(newOperator.getFirstName());
+        operator.setLastName(newOperator.getLastName());
         return operatorRepository.save(operator);
     }
 
-    public void deleteByEmail(String employeeCode) {
-        operatorRepository.deleteByEmployeeCode(employeeCode);
+    public void setNonAvailable(Long id) {
+        Operator operator = operatorRepository.findById(id).get();
+        operator.setIsAvailable(false);
+        operatorRepository.save(operator);
+    }
+
+    public void deleteByEmployeeCode(String employeeCode) {
+        operatorRepository.delete(operatorRepository.findByEmployeeCode(employeeCode).get());
     }
 }
