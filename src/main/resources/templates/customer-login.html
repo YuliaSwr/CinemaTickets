@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/customer-login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,500;0,600;1,300;1,500&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Kiwi+Maru:wght@300;400;500&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<div class="main">
+    <div class="main-title">
+        Sign In As Customer
+    </div>
+    <div class="main-form">
+        <form th:action="@{/login}" method="post">
+            <input type="email" placeholder="Email" id="username" name="username">
+            <input type="password" placeholder="Password" id="password" name="password">
+            <input type="submit" value="Submit" id="submit">
+        </form>
+    </div>
+    <div class="main-footer">
+<a href="/registration">Create account</a>
+    </div>
+</div>
+</body>
+</html>

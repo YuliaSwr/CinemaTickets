@@ -24,15 +24,11 @@ public class Operator {
     @Id
     private Long id;
 
-    @NotNull
     private String employeeCode;
 
-    @NotNull
     private String lastName;
 
-    @NotNull
     private String firstName;
 
-    @NotNull
     private Boolean isAvailable = true;
 }
