@@ -12,4 +12,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
     Optional<Customer> findByEmail(String email);
 
     List<Customer> findAll();
+
+    Optional<Customer> findByEmailIgnoreCase(String email);
 }
+

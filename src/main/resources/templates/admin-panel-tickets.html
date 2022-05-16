@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}" >
-    <link rel="stylesheet" href="../static/css/queue-table.css" th:href="@{/css/queue-table.css}" >
-    <link rel="stylesheet" href="../static/css/statistic-block.css" th:href="@{/css/statistic-block.css}" >
-    <link rel="stylesheet" href="../static/css/selection-block.css" th:href="@{/css/selection-block.css}" >
+    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="../static/css/queue-table.css" th:href="@{/css/queue-table.css}">
+    <link rel="stylesheet" href="../static/css/statistic-block.css" th:href="@{/css/statistic-block.css}">
+    <link rel="stylesheet" href="../static/css/selection-block.css" th:href="@{/css/selection-block.css}">
     <link rel="stylesheet" href="../static/css/registration-block.css" th:href="@{/css/registration-block.css}">
 
     <!--FONTS -->
@@ -96,7 +96,9 @@
                 <label for="customer">Customer email:</label>
                 <select id="customer" required th:field="*{customerEmail}">
                     <option value="">Select a customer</option>
-                    <option th:each="customer : ${customers}" th:text="${customer.email}" th:value="${customer.email}">hh</option>
+                    <option th:each="customer : ${customers}" th:text="${customer.email}" th:value="${customer.email}">
+                        hh
+                    </option>
                 </select>
             </div>
             <div class="register-form-item">
@@ -136,6 +138,10 @@
                 <input type="submit" value="Submit" id="submit">
             </div>
         </div>
+        <div class="att-title">
+            Attention! When a new ticket is added, then a new assignment appears in the task section, where you can
+            assign an operator for it from the list of available operators
+        </div>
     </div>
 </form>
 <!----------------------->
@@ -152,11 +158,12 @@
                 <select id="search-customer" required th:field="*{customerEmail}">
                     <option value="">Select a customer</option>
                     <option value="ALL">ALL</option>
-                    <option th:each="customer : ${customers}" th:text="${customer.email}" th:value="${customer.email}"></option>
+                    <option th:each="customer : ${customers}" th:text="${customer.email}"
+                            th:value="${customer.email}"></option>
                 </select>
             </div>
-            <div class="selection-form-item selction-submit">
-                <input type="submit" value="Submit" id="search-submit" class="button">
+            <div class="selection-form-item">
+                <input type="submit" value="Submit" id="search">
             </div>
         </div>
     </div>
@@ -187,44 +194,11 @@
                 CUSTOMER
             </th>
             <th class="button-column-t">
-                EDIT
-            </th>
-            <th class="button-column-t">
                 DELETE
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                0
-            </td>
-            <td>
-                Green Book
-            </td>
-            <td>
-                20.05.22
-            </td>
-            <td>
-                20.00
-            </td>
-            <td>
-                COMFORT
-            </td>
-            <td>
-                yulia@gmail.com
-            </td>
-            <td>
-                <form>
-                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button class="button delete-button" type="submit" name="submit">DELETE</button>
-                </form>
-            </td>
-        </tr>
         <tr th:each="ticket : ${tickets}">
             <td th:text="${ticket.id}"></td>
             <td th:text="${ticket.movie}"></td>
@@ -232,11 +206,6 @@
             <td th:text="${ticket.time}"></td>
             <td th:text="${ticket.type}"></td>
             <td th:text="${ticket.customerEmail}"></td>
-            <td>
-                <form method="post" th:method="post">
-                    <button class="button edit-button" type="submit">EDIT</button>
-                </form>
-            </td>
             <td>
                 <form th:method="post" th:action="@{/admin/ticket/delete/{id}(id=${ticket.id})}">
                     <button class="button delete-button" type="submit">DELETE</button>

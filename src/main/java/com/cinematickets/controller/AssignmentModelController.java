@@ -3,6 +3,7 @@ package com.cinematickets.controller;
 import com.cinematickets.entity.Assignment;
 import com.cinematickets.entity.AssignmentStatus;
 import com.cinematickets.entity.EditAssignment;
+import com.cinematickets.entity.Ticket;
 import com.cinematickets.service.AssignmentService;
 import com.cinematickets.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class AssignmentModelController {
     @PostMapping()
       public String edit(Model model, @ModelAttribute EditAssignment editAssignment) {
         assignmentService.edit(editAssignment);
+
         operatorService.setNonAvailable(editAssignment.getOperatorId());
         return "redirect:/admin/assignment";
     }

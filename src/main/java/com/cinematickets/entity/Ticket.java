@@ -1,14 +1,17 @@
 package com.cinematickets.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
-@Data
 @Entity
-public class Ticket implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Ticket {
 
     @SequenceGenerator(
             name = "ticket_sequence",
@@ -35,4 +38,7 @@ public class Ticket implements Serializable {
 
     @NotNull
     private String customerEmail;
+
+    @Enumerated(value = EnumType.STRING)
+    private AssignmentStatus status = AssignmentStatus.WAITING;
 }

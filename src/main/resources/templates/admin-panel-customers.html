@@ -5,8 +5,8 @@
     <title>Admin Panel</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}" >
-    <link rel="stylesheet" href="../static/css/queue-table.css" th:href="@{/css/queue-table.css}" >
+    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="../static/css/queue-table.css" th:href="@{/css/queue-table.css}">
     <link rel="stylesheet" href="../static/css/registration-block.css" th:href="@{/css/registration-block.css}">
 
     <!--FONTS -->
@@ -37,25 +37,18 @@
             Register new customer
         </div>
         <div class="register-form">
+            <input type="text" th:field="*{id}" th:value="${customer.id}" hidden>
             <div class="register-form-item">
-                <label for="first-name">First name:</label>
-                <input type="text" id="first-name" th:field="*{firstName}">
-            </div>
-            <div class="register-form-item">
-                <label for="last-name">Last name:</label>
-                <input type="text" id="last-name" th:field="*{lastName}">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}">
             </div>
             <div class="register-form-item">
                 <label for="phone-number">Phone number:</label>
-                <input type="text" id="phone-number" th:field="*{phoneNumber}">
+                <input type="text" id="phone-number" minlength="10" maxlength="10" pattern="[0-9]*" th:field="*{phoneNumber}">
             </div>
             <div class="register-form-item">
                 <label for="email">Email:</label>
                 <input type="email" id="email" th:field="*{email}">
-            </div>
-            <div class="register-form-item">
-                <label for="password">Password:</label>
-                <input type="password" id="password" th:field="*{password}">
             </div>
             <div class="register-form-item register-submit">
                 <input type="submit" name="submit" value="Submit" id="submit">
@@ -75,10 +68,7 @@
                 ID
             </th>
             <th class="info-column-c">
-                FIRST NAME
-            </th>
-            <th class="info-column-c">
-                LAST NAME
+                NAME
             </th>
             <th class="info-column-c">
                 EMAIL
@@ -87,54 +77,17 @@
                 PHONE_NUMBER
             </th>
             <th class="button-column-c">
-                EDIT
-            </th>
-            <th class="button-column-c">
                 DELETE
             </th>
         </tr>
         </thead>
         <!--------------------->
         <tbody>
-        <tr>
-            <td>
-                0
-            </td>
-            <td>
-                WILL
-            </td>
-            <td>
-                SMITH
-            </td>
-            <td>
-                oskar@gmail.com
-            </td>
-            <td>
-                +380957236841
-            </td>
-            <td>
-                <form>
-                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
-                </form>
-            </td>
-            <td>
-                <form>
-                    <button class="button delete-button" type="submit" name="submit">DELETE</button>
-                </form>
-            </td>
-
-        </tr>
         <tr th:each="customer : ${customers}">
             <td th:text="${customer.id}"></td>
-            <td th:text="${customer.firstName}"></td>
-            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.name}"></td>
             <td th:text="${customer.phoneNumber}"></td>
             <td th:text="${customer.email}"></td>
-            <td>
-                <form method="post" th:method="post">
-                    <button class="button edit-button" type="submit" name="submit">EDIT</button>
-                </form>
-            </td>
             <td>
                 <form th:method="post" th:action="@{/admin/customer/delete/{id}(id=${customer.id})}">
                     <button class="button delete-button" type="submit" name="submit">DELETE</button>

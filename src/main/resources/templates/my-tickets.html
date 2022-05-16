@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>My Tickets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/my-tickets.css">
-    <link rel="stylesheet" href="../static/css/queue-table.css">
+    <link rel="stylesheet" href="../static/css/queue-table.css"  th:href="@{/css/queue-table.css}">
+    <link rel="stylesheet" href="../static/css/selection-block.css" th:href="@{/css/selection-block.css}" >
+    <link rel="stylesheet" href="../static/css/my-tickets.css"  th:href="@{/css/my-tickets.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;1,300;1,500&display=swap"
@@ -14,99 +15,85 @@
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Kiwi+Maru:wght@300;400;500&display=swap"
           rel="stylesheet">
+    <script th:src="@{/js/mytickets.js}"></script>
 </head>
 <body>
 <!------- HEADER ------->
 <div class="header">
     <div class="header-logo">
-        <img src="../static/img/new-logo.png">
+        <img th:src="@{/img/logo1.png}" src="../static/img/logo1.png">
     </div>
     <div class="header-menu">
-        <a href="booking.html">Booking</a>
-        <a href="my-tickets.html" class="current-page">My Tickets</a>
+        <a th:href="@{/}" class="current-page">Booking</a>
+        <a th:href="@{/mytickets}">My Tickets</a>
     </div>
     <div class="header-profile">
-        <p>yulia.swr@gmail.com</p>
+        <a th:href="@{/admin/assignment}">Login As Admin </a>
         <span class="material-symbols-outlined">account_circle</span>
     </div>
 </div>
 <!---------------------->
 
-<!----- MAIN BLOCK ----->
-<div class="main">
-    <div class="main-title">
-        My Booked Tickets
+<!---- SELECTION FORM --->
+<form class="selection-block" method="post" th:action="@{/mytickets}" th:object="${search}">
+    <div class="selection  client-sel">
+        <div class="selection-title">
+            SELECT ASSIGNMENTS
+        </div>
+        <div class="selection-form">
+            <div class="selection-form-item">
+                <label for="email">Your email:</label>
+                <input type="email" name="email" id="email" required th:field="*{customerEmail}">
+            </div>
+            <div class="selection-form-item">
+                <input type="submit" value="Submit" id="search">
+            </div>
+        </div>
     </div>
-    <div class="queue">
-        <table cellpadding="0" cellspacing="0">
-            <thead>
-            <tr id="thead">
-                <th class="info-column-t">
-                    TICKET_ID
-                </th>
-                <th class="info-column-t">
-                    MOVIE
-                </th>
-                <th class="info-column-t">
-                    SESSION_DATE
-                </th>
-                <th class="info-column-t">
-                    SESSION_TIME
-                </th>
-                <th class="info-column-t">
-                    TYPE
-                </th>
-                <th class="info-column-t">
-                    STATUS
-                </th>
-                <th class="button-column-t">
-                    CANCEL
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    0
-                </td>
-                <td>
-                    Green Book
-                </td>
-                <td>
-                    20.05.22
-                </td>
-                <td>
-                    20.00
-                </td>
-                <td>
-                    COMFORT
-                </td>
-                <td>
-                    DONE
-                </td>
-                <td>
-                    <form>
-                        <button class="button delete-button" type="submit" name="submit">CANCEL</button>
-                    </form>
-                </td>
-            </tr>
-            <tr th:each="ticket : ${tickets}">
-                <td th:text="${ticket.id}"></td>
-                <td th:text="${ticket.movie}"></td>
-                <td th:text="${ticket.date}"></td>
-                <td th:text="${ticket.time}"></td>
-                <td th:text="${ticket.type}"></td>
-                <td th:text="${ticket.customerEmail}"></td>
-                <td>
-                    <form th:method="post" th:action="@{/admin/ticket/delete/{id}(id=${ticket.id})}">
-                        <button class="button delete-button" type="submit">CANCEL</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+</form>
+<!----------------------->
+
+<!----- QUEUE TABLE ----->
+<div class="queue" id="queue">
+    <table class="assignment-table" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr id="thead">
+            <th class="info-column-t">
+                TICKET_ID
+            </th>
+            <th class="info-column-t">
+                CUSTOMER
+            </th>
+            <th class="info-column-t">
+                MOVIE
+            </th>
+            <th class="info-column-t">
+                SESSION_DATE
+            </th>
+            <th class="info-column-t">
+                SESSION_TIME
+            </th>
+            <th class="info-column-t">
+                TYPE
+            </th>
+            <th class="info-column-t">
+                STATUS
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.customerEmail}"></td>
+            <td th:text="${ticket.movie}"></td>
+            <td th:text="${ticket.date}"></td>
+            <td th:text="${ticket.time}"></td>
+            <td th:text="${ticket.type}"></td>
+            <td th:text="${ticket.status}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<!---------------------->
+<!----------------------->
 </body>
 </html>

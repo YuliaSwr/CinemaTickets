@@ -61,11 +61,13 @@
     box-shadow: 1px 1px 1px #bad9bf;
 }
 
-#selection-submit {
+#selection:hover {
+    color: #000;
+}
+
+#search {
     background-color: #bad9bf;
     color: #fff;
-
-    box-shadow: 2px 2px 7px #e1e1e3;
 
     cursor: pointer;
 
@@ -76,16 +78,11 @@
     font-size: 18px;
 }
 
-#selection:hover {
+#search:hover {
     color: #000;
 }
 
-.button {
-    border: 0;
-    color: #fff;
-    padding: 10px 15px;
-    font-size: 12px;
-    cursor: pointer;
+.client-sel {
+    background: #F2F2F4;
 }
-
 /* ----------------------------------- */

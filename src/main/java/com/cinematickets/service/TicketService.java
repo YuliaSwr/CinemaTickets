@@ -40,4 +40,8 @@ public class TicketService {
     public List<Ticket> getAllByCustomer(String email) {
         return ticketRepository.findAllByCustomerEmail(email);
     }
+
+    public Ticket getById(Long id) {
+        return ticketRepository.findById(id).get();
+    }
 }

@@ -7,26 +7,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
-public class CustomerService implements UserDetailsService {
+public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return customerRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User" + email + " is NOT found!"));
-    }
+//
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        return customerRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User" + email + " is NOT found!"));
+//    }
 
 
     public Customer save(Customer customer) {
@@ -34,8 +34,6 @@ public class CustomerService implements UserDetailsService {
                 .ifPresent((s) -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email is already in system");
                 });
-        customer.setRole("CUSTOMER");
-        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
         return customerRepository.save(customer);
     }
 
@@ -50,5 +48,14 @@ public class CustomerService implements UserDetailsService {
 
     public void deleteById(Long id) {
         customerRepository.deleteById(id);
+    }
+
+    public Customer getById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id is wrong"));
+    }
+
+    public void update(Customer customer) {
+        customerRepository.save(customer);
     }
 }

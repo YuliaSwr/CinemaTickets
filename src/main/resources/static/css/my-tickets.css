@@ -3,6 +3,7 @@ body {
     padding: 0;
 
     background-color: #fff;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* ------- HEADER ------- */
@@ -20,7 +21,7 @@ body {
 }
 
 .header-logo img {
-    height: 45px;
+    height: 60px;
     padding-left: 30%;
     padding-top: 20px;
 }
@@ -30,13 +31,18 @@ body {
     justify-content: center;
     align-items: center;
 
-    width: 20%;
+    background: #bad9bf;
+    cursor: pointer;
+
+    width: 10%;
+    padding: 10px;
 }
 
-.header-profile p {
-
+.header-profile a {
+    text-decoration: none;
+    color: #000;
     font-family: 'Montserrat', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     margin-right: 10px;
 }
 
@@ -71,11 +77,24 @@ body {
     font-size: 20px;
 }
 
-.main {
+body {
     width: 100%;
     height: fit-content;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.queue {
+    background: #F2F2F4;
+}
+
+.client-sel {
+    font-family: 'Montserrat', sans-serif;
+    margin: 50px 0;
+}
+
+#email {
+    background: #fff;
 }

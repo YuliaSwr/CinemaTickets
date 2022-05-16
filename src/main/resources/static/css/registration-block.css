@@ -95,4 +95,12 @@
     color: #000;
 }
 
+.att-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    margin: 20px;
+    color: #727272;
+    text-wrap: normal;
+}
+
 /* -------------------------------- */

@@ -5,6 +5,7 @@ import com.cinematickets.entity.AssignmentStatus;
 import com.cinematickets.entity.EditAssignment;
 import com.cinematickets.entity.Ticket;
 import com.cinematickets.repository.AssignmentRepository;
+import com.cinematickets.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class AssignmentService {
 
     @Autowired
     private AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Autowired
     private OperatorService operatorService;
@@ -57,6 +61,7 @@ public class AssignmentService {
 
         assignment.setOperatorId(request.getOperatorId());
         assignment.setStatus(AssignmentStatus.IN_PROCESS);
+        ticketRepository.findById(assignment.getTicketId()).get().setStatus(AssignmentStatus.IN_PROCESS);
 
         assignmentRepository.save(assignment);
     }
@@ -83,6 +88,7 @@ public class AssignmentService {
         operatorService.getById(assignment.getOperatorId()).setIsAvailable(true);
 
         assignment.setStatus(AssignmentStatus.DONE);
+        ticketRepository.findById(assignment.getTicketId()).get().setStatus(AssignmentStatus.DONE);
         assignmentRepository.save(assignment);
     }
 }
